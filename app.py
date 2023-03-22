@@ -6,6 +6,5 @@ app = Flask(__name__)
 # decorator @ is used to determine path and trigger proceeding function
 @app.get("/")
 def hello_world():
- return "<p>Hello, World!</p>"
-
 #  This is database
+ return "<p>Hello, World!</p>"
