@@ -1,20 +1,10 @@
-# Author: Yusuf
-# Objective: Using SQLAlchemy for API development.
- 
+# import the Flask class from the flask library
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
- 
+# create an instance of the Flask class and assign to app
+# __name__ refers to the default path of the package
 app = Flask(__name__)
- 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-app.config['SQLALCHEMY_ECHO'] = True
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
- 
-# Instantiate db obj
-db = SQLAlchemy(app)
- 
- 
-@app.get("/home")
-def test_route():
-    return "Test the app"
+# decorator @ is used to determine path and trigger proceeding function
+@app.get("/")
+def hello_world():
+ return "<p>Hello, World!</p>"
  
