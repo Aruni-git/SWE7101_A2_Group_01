@@ -1,11 +1,14 @@
-# Author: Yusuf
-# Objective: Using SQLAlchemy for API development.
- 
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
- 
+# import the Flask class from the flask library
+from flask import Flask,jsonify
+# create an instance of the Flask class and assign to app
+# __name__ refers to the default path of the package
 app = Flask(__name__)
+# decorator @ is used to determine path and trigger proceeding function
+@app.get("/")
+def hello_world():
+ return "<p>Hello, Welcome to our student management system!</p>"
  
+<<<<<<< HEAD
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///student.db'
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -36,3 +39,9 @@ with app.app_context():
 def test_route():
     return "Test the app"
  
+=======
+@app.get("/get-json")
+def get_json():
+ response = [{"forename":"Aruni"},{"surname":"Gunapala"}]
+ return jsonify (response)
+>>>>>>> 81ae0b85dfe3f2860757a311027512c48f94fdc7
