@@ -27,12 +27,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy()
 db.init_app(app)
 
-
-# Import each table from model.py to app.py so that Flask can run
-
-
-
-
 with app.app_context():
     db.create_all()
 
