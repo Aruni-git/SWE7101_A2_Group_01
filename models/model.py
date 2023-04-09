@@ -1,8 +1,10 @@
+
 #Author name: Yusuf
 #Purpose: Create each tables with its attributes in the database
 #Date: March 29, 2023
 
-from app import db
+from .. import db, ma
+
 
 
 # Create table for Attendance
@@ -28,6 +30,9 @@ class Tutor(db.Model):
 
     def __repr__(self) -> str:
         return self.tutor_forename
+    
+
+
 
 # Create table for Student
 class Student(db.Model):
@@ -40,10 +45,25 @@ class Student(db.Model):
 
     def __repr__(self) -> str:
         return self.student_forename
+    
+ # Create Student Schema  
+class StudentSchema(ma.Schema):
+    class Meta:
+        # Fields to expose
+        fields = ("student_id","student_forename", "student_surname", "student_email", "student_category")
+
+# for a single instance of student 
+student_schema = StudentSchema()
+# for many instancves of student
+students_schema = StudentSchema(many=True)
+
+
+
 
 # Create table for Course
 class Course(db.Model):
-    course_code = db.Column(db.Integer(), primary_key=True)
+    course_id = db.Column(db.Integer(), primary_key=True)
+    course_code = db.Column(db.Integer(), nullable = False)
     course_title = db.Column(db.String(80), nullable=False)
     course_description = db.Column(db.String(120), nullable=False)
     course_level = db.Column(db.Integer(), nullable=False)
@@ -51,6 +71,20 @@ class Course(db.Model):
 
     def __repr__(self) -> str:
         return self.course_title
+    
+# Create Course Schema
+class CourseSchema(ma.Schema):
+    class Meta:
+        # Fields to expose
+        fields = ("course_id","course_code", "course_title", "course_description", "course_level", "course_credits")
+
+# for a single instance of course 
+course_schema = CourseSchema()
+# for many instancves of courses
+courses_schema = CourseSchema(many=True)
+
+
+
 
 # Create table for Module
 class Module(db.Model):
@@ -59,12 +93,45 @@ class Module(db.Model):
     module_description = db.Column(db.String(80), nullable=False)
     module_level = db.Column(db.Integer(), nullable=False)
     module_credits = db.Column(db.Integer(), nullable=False)
-    course_code = db.Column(db.String(120), nullable=False)
-    student_id = db.Column(db.Integer(), nullable=False)
-
+    course_id = db.Column(db.String(120), db.ForeignKey('course.course_id'), nullable=False)
+    student_enrole_module = db.relationship('Student_Enrole_Module', backref='module')
 
     def __repr__(self) -> str:
         return self.module_title
+    
+# Create Module Schema
+class ModuleSchema(ma.Schema):
+    class Meta:
+        # Fields to expose
+        fields = ("course_id","module_id","module_title", "module_description", "module_level", "module_credits")
+
+# for a single instance of module 
+module_schema = ModuleSchema()
+# for many instancves of modules
+modules_schema = ModuleSchema(many=True)
+
+
+
+#Create a table for the students enrolled in a module
+class Student_Enrole_Module(db.Model):
+    id = db.Column(db.Integer(), primary_key= True)
+    module_id = db.Column(db.Integer,  db.ForeignKey('module.module_id'), nullable=False)
+    student_id = db.Column(db.Integer,  db.ForeignKey('student.student_id'), nullable=False)
+
+    def __repr__(self) -> str:
+        return f" module student {self.student_id}"
+
+# Create Module Enrolment Schema
+class EnroleSchema(ma.Schema):
+    class Meta:
+        # Fields to expose
+        fields = ("id","module_id", "student_id")
+
+# for a single instance of enrol module 
+enrol_schema = EnroleSchema()
+# for many instances of enrol modules
+enrols_schema = EnroleSchema(many=True)
+
 
 # Create table for Timetable Event
 class Timetable_Event(db.Model):
