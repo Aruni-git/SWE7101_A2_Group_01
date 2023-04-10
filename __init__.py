@@ -35,13 +35,14 @@ def create_app():
 
     # This import each files of this codebase so it can run in app.
     from . import student, course, module
+    from . import checkin_duration
 
 
     #this registers each of the routes
     app.register_blueprint(student.st)
     app.register_blueprint(course.cs)
     app.register_blueprint(module.md)
-
+    app.register_blueprint(checkin_duration.gc )
 
     with app.app_context():
         # db.drop_all()

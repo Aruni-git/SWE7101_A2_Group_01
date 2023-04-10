@@ -1,12 +1,15 @@
-from flask import Flask,jsonify,request,session
+from flask import Flask,jsonify,request,session,Blueprint
+from . import app
 from datetime import datetime,timedelta
 import random
 import string
 
-app = Flask(__name__)
+
 app.secret_key = 'my_secret_key'
 
-@app.route('/checkin',methods=[' post'])
+gc = Blueprint('generate_checkin_code', __name__, url_prefix='/generate')
+
+@gc.route('/checkin',methods=['post'])
 def checkin():
     if not session.get('checkin_code'):
         session['checkin_code'] = generate_checkin_code()
@@ -19,11 +22,11 @@ def checkin():
             session['checkin_code'] = generate_checkin_code()
             session['checkin_expiry'] = datetime.now()+ timedelta(minutes=20)
     return jsonify({'checkin_code': session['checkin_code'],'expiry_time': session['checkin_expiry'].strftime('%Y-%m-%d %H:%M:%S')})
-
+@gc.route('/generate-checkin-code',methods=[' post'])
 def generate_checkin_code():
     #Code to generate a random 6-characterr check_in code
     return ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
-
+@gc.route('/checkin-expired',methods=['post'])
 def checkin_expired():
     #Check if check-in code has expired
     if session.get('checkin_expiry'):
@@ -31,5 +34,5 @@ def checkin_expired():
     else:
         return True
     
-if __name__ == '__main__':
-    app.run(debug=True)
+
+    
