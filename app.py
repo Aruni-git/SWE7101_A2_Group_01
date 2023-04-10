@@ -40,3 +40,4 @@ with app.app_context():
 def get_json():
  response = [{"forename":"Aruni"},{"surname":"Gunapala"}]
  return jsonify (response)
+
