@@ -1,9 +1,12 @@
+#Author name: Likitha
+#Purpose: Checkin_duration
+#Date: April 04, 2023
+
 from flask import Flask,jsonify,request,session,Blueprint
 from . import app
 from datetime import datetime,timedelta
 import random
 import string
-
 
 app.secret_key = 'my_secret_key'
 
