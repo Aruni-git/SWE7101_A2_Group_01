@@ -39,8 +39,8 @@ def bulk_reg(timetable_event_id):
 def amend(timetable_event_id):
     stat = request.json.get("student_id")
 
-    change = Attendance.query.filter_by(timetable_event_id=Attendance.timetable_event_id, status=Attendance.status, student_id=Attendance.student_id)
-    if Attendance.status is not "P":
+    change = Attendance.query.filter_by(timetable_event_id, student_id=stat)
+    if change.status is not "P":
             stat = "P"
             db.session.commit()
             return jsonify ({"success":"attendance has been updated"})
