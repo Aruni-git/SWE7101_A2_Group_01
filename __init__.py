@@ -36,17 +36,18 @@ def create_app():
     # This import each files of this codebase so it can run in app.
     from . import student, course, module
     from . import checkin_duration
-    from . import check_in
     from .attendance import attendance
+    from . import timetable_event
 
 
     #this registers each of the routes
     app.register_blueprint(student.st)
     app.register_blueprint(course.cs)
     app.register_blueprint(module.md)
-    app.register_blueprint(checkin_duration.gc )
-    app.register_blueprint(check_in.ci)
+    app.register_blueprint(checkin_duration.gc)
     app.register_blueprint(attendance.at)
+    app.register_blueprint(timetable_event.tt)
+
 
 
     with app.app_context():
