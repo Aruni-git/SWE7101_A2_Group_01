@@ -2,7 +2,7 @@
 #Purpose: Accept only code P to mark attendance present
 #Date: April 01, 2023
 from flask import request, jsonify, Blueprint
-from ..models.model import Timetable_Event, Attendance
+from ..models.model import Timetable_Event, Attendance 
 from .. import db
 
 at = Blueprint('attendance', __name__, url_prefix='/register-attendance')
@@ -15,7 +15,7 @@ def attendance(timetable_event_id):
     # the checkin code should be generated and stored in the timetable event table by the tutor
     check_in_code = Timetable_Event.query.filter_by(check_in_code=check_in, timetable_event_id=timetable_event_id).first()
     if check_in_code:
-        register_attendance = Attendance(timetable_event_id=timetable_event_id, student_id=1, status="P")
+        register_attendance = Attendance(timetable_event_id=timetable_event_id, student_id= 1, status="P") #P is set as a placeholder for the code of A/O/N/P functionality, and 1 is a placeholder till the student has been committed into database
         db.session.add(register_attendance)
         db.session.commit()
 
@@ -35,6 +35,15 @@ def bulk_reg(timetable_event_id):
 
     return jsonify ({"success":"Students Attendance Has Been marked"})
      
-#@at.route('amend-attendance/<int:timetable_event_id>', methods=['PUT'])
-#def amend(timetable_event_id):
+@at.route('amend-attendance/<int:timetable_event_id>', methods=['PUT'])
+def amend(timetable_event_id):
+    stat = request.json.get("student_id")
+
+    change = Attendance.query.filter_by(timetable_event_id=Attendance.timetable_event_id, status=Attendance.status, student_id=Attendance.student_id)
+    if Attendance.status is not "P":
+            stat = "P"
+            db.session.commit()
+            return jsonify ({"success":"attendance has been updated"})
     
+    else:
+         return jsonify({"error":"attendance has already been marked"})
