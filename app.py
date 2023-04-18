@@ -61,9 +61,6 @@ module_schema = ModuleSchema(many =True)
 
 @app.route('/fetchLessons/<tutor_id>', methods = ['GET'])
 def fetchLessonsByTutor(tutor_id):
-   #add keyboard input to tutorid
-   #remove the hard code value for the tutorid
-   #add this in seperate page and make it work
     
     lessons = Module.query.filter_by(tutor_id=tutor_id)
     results = module_schema.dump(lessons)
