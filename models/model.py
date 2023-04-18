@@ -137,9 +137,8 @@ enrols_schema = EnroleSchema(many=True)
 class Timetable_Event(db.Model):
     __tablename__ = "timetable_event"
     timetable_event_id = db.Column(db.Integer(), primary_key=True)
-    timetable_event_day = db.Column(db.String(80), nullable=False)
+    timetable_event_datetime = db.Column(db.DateTime, nullable=False)
     timetable_event_description = db.Column(db.String(80), nullable=False)
-    timetable_event_timestart = db.Column(db.String(80), nullable=False)
     timetable_event_duration = db.Column(db.Integer(), nullable=False)
     timetable_event_room = db.Column(db.String(80), nullable=False)
     module_id = db.Column(db.Integer,  db.ForeignKey('module.module_id'), nullable=False)
@@ -147,5 +146,15 @@ class Timetable_Event(db.Model):
 
 
     def __repr__(self) -> str:
-        return self.timetable_event_day
+        return self.timetable_event_description
     
+    # Create Timetable_Event Schema
+class Timetable_Event_Schema(ma.Schema):
+    class Meta:
+        # Fields to expose
+        fields = ("timetable_event_id","timetable_event_datetime","timetable_event_description", "timetable_event_duration", "timetable_event_room", "module_id", "check_in_code")
+
+# for a single instance of Timetable_Event 
+timetable_event_schema = Timetable_Event_Schema()
+# for many instances of Timetable_event
+timetable_event_schema = Timetable_Event_Schema(many=True)
