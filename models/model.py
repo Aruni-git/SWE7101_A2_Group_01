@@ -2,6 +2,7 @@
 #Purpose: Create each tables with its attributes in the database
 #Date: March 29, 2023
 
+from sqlalchemy import ForeignKey, ForeignKeyConstraint
 from app import db
 
 
@@ -61,6 +62,7 @@ class Module(db.Model):
     module_credits = db.Column(db.Integer(), nullable=False)
     course_code = db.Column(db.String(120), nullable=False)
     student_id = db.Column(db.Integer(), nullable=False)
+    tutor_id = db.Column(db.Integer(), nullable=False)
 
 
     def __repr__(self) -> str:
