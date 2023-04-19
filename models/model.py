@@ -94,6 +94,7 @@ class Module(db.Model):
     module_level = db.Column(db.Integer(), nullable=False)
     module_credits = db.Column(db.Integer(), nullable=False)
     course_id = db.Column(db.String(120), db.ForeignKey('course.course_id'), nullable=False)
+    tutor_id = db.Column(db.String(120), db.ForeignKey('tutor.tutor_id'), nullable=False)
     student_enrole_module = db.relationship('Student_Enrole_Module', backref='module')
 
     def __repr__(self) -> str:
@@ -103,7 +104,7 @@ class Module(db.Model):
 class ModuleSchema(ma.Schema):
     class Meta:
         # Fields to expose
-        fields = ("course_id","module_id","module_title", "module_description", "module_level", "module_credits")
+        fields = ("course_id","module_id","module_title", "module_description", "module_level", "module_credits",'tutor_id')
 
 # for a single instance of module 
 module_schema = ModuleSchema()
