@@ -4,6 +4,7 @@
 from flask import request, jsonify, Blueprint
 from ..models.model import Timetable_Event, Attendance 
 from .. import db
+from datetime import datetime, timedelta
 
 at = Blueprint('attendance', __name__, url_prefix='/register-attendance')
 
@@ -11,17 +12,24 @@ at = Blueprint('attendance', __name__, url_prefix='/register-attendance')
 def attendance(timetable_event_id):
 
     check_in = request.json.get('check_in_code')
-
+    now = datetime.now()
     # the checkin code should be generated and stored in the timetable event table by the tutor
     check_in_code = Timetable_Event.query.filter_by(check_in_code=check_in, timetable_event_id=timetable_event_id).first()
-    if check_in_code:
-        register_attendance = Attendance(timetable_event_id=timetable_event_id, student_id= 1, status="P") #P is set as a placeholder for the code of A/O/N/P functionality, and 1 is a placeholder till the student has been committed into database
-        db.session.add(register_attendance)
-        db.session.commit()
+    event_time = check_in_code.timetable_event_datetime
+    event_time_plus = event_time + timedelta(minutes = 20)
+    if event_time_plus > now:
+        if check_in_code:
+            register_attendance = Attendance(timetable_event_id=timetable_event_id, student_id= 1, status="P") #P is set as a placeholder for the code of A/O/N/P functionality, and 1 is a placeholder till the student has been committed into database
+            db.session.add(register_attendance)
+            db.session.commit()
 
-        return jsonify ({"success" : "Attendance Has Been Marked"})
+            return jsonify ({"success" : "Attendance Has Been Marked"})
+        else:
+            return jsonify ({"error":"Invalid Input, Attendance Has Not Been Marked"})
+        
     else:
-        return jsonify ({"error":"Invalid Input, Attendance Has Not Been Marked"})
+        return jsonify ({"error":"You are late, Attendance Has Not Been Marked"})
+
     
 @at.route('/bulk-attendance/<int:timetable_event_id>', methods=['POST'])
 def bulk_reg(timetable_event_id):

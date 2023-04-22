@@ -18,6 +18,18 @@ class Attendance(db.Model):
     def __repr__(self) -> str:
         return self.attendance_date
     
+class AttendanceSchema(ma.Schema):
+    class Meta:
+        # Fields to expose
+        fields = ("attendnace_id","attendance_date","timetable_event_id", "status", "student_id")
+
+# for a single instance of Attendance
+attendance_schema = AttendanceSchema()
+# for many instances of Attendance
+attendances_schema = AttendanceSchema(many=True)
+    
+    
+    
 # Create table for Tutor
 class Tutor(db.Model):
     tutor_id = db.Column(db.Integer(), primary_key=True)

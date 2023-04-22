@@ -38,6 +38,8 @@ def create_app():
     from . import checkin_duration
     from .attendance import attendance
     from . import timetable_event
+    from . import previous_attendance
+    from . import persisted_codes
 
 
     #this registers each of the routes
@@ -47,6 +49,8 @@ def create_app():
     app.register_blueprint(checkin_duration.gc)
     app.register_blueprint(attendance.at)
     app.register_blueprint(timetable_event.tt)
+    app.register_blueprint(previous_attendance.gm)
+    app.register_blueprint(persisted_codes.pc)
 
 
 
@@ -61,3 +65,7 @@ def create_app():
 @app.get("/")
 def hello_world():
  return "<p>Hello, Welcome to our student management system!</p>"
+
+@app.get("/bb")
+def hello():
+ return "<p>Hello, Welcome gement system!</p>"
