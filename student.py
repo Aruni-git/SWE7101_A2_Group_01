@@ -23,7 +23,7 @@ def reg_student():
     student_email = request.json.get("student_email")
     student_category = request.json.get("student_category")
 
-    student = Student(student_forename=student_forename, student_surname=student_lastname,student_email=student_email, student_category = student_category)
+    student = Student(student_forename=student_forename, student_lastname=student_lastname,student_email=student_email, student_category = student_category)
     db.session.add(student)
     db.session.commit()
 
