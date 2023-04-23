@@ -1,5 +1,5 @@
-#Author name: Jeffrey
-#Purpose: Accept only code P to mark attendance present
+#Author name: Jeffrey and Likitha
+#Purpose: Accept only code P to mark attendance present, Checkin_duration
 #Date: April 01, 2023
 from flask import request, jsonify, Blueprint
 from ..models.model import Timetable_Event, Attendance 
