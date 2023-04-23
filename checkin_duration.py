@@ -1,4 +1,4 @@
-#Author name: Likitha
+#Author name: Ammar and Likitha
 #Purpose: Checkin_duration
 #Date: April 04, 2023
 
