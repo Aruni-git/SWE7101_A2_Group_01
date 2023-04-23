@@ -38,7 +38,7 @@ class Tutor(db.Model):
 class Student(db.Model):
     student_id = db.Column(db.Integer(), primary_key=True)
     student_forename = db.Column(db.String(80), nullable=False)
-    student_surname = db.Column(db.String(80), nullable=False)
+    student_lastname = db.Column(db.String(80), nullable=False)
     student_email = db.Column(db.String(80), nullable=False)
     student_category = db.Column(db.String(80), nullable=False)
 
@@ -50,7 +50,7 @@ class Student(db.Model):
 class StudentSchema(ma.Schema):
     class Meta:
         # Fields to expose
-        fields = ("student_id","student_forename", "student_surname", "student_email", "student_category")
+        fields = ("student_id","student_forename", "student_lastname", "student_email", "student_category")
 
 # for a single instance of student 
 student_schema = StudentSchema()
