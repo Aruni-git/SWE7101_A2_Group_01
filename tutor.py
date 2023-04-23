@@ -15,7 +15,7 @@ tt = Blueprint('tutor', __name__, url_prefix='/tutor')
 def tutor():
     return jsonify({"Welcome": "Tutor Page"})
 
-@tt.route('/fetchLessons/<tutor_id>', methods = ['GET'])
+@tt.route('/lessons/<tutor_id>', methods = ['GET'])
 def fetchLessonsByTutor(tutor_id): 
     
     fetch_lessons = Module.query.filter_by(tutor_id=tutor_id)
