@@ -26,9 +26,9 @@ def reg_module():
     module_level = request.json.get("module_level")
     module_credits = request.json.get("module_credits")
     course_id = request.json.get("course_id")
-    
+    tutor_id = request.json.get("tutor_id")
 
-    module = Module(module_title = module_title, module_description = module_description, module_level = module_level, module_credits = module_credits, course_id = course_id)
+    module = Module(module_title = module_title, module_description = module_description, module_level = module_level, module_credits = module_credits, course_id = course_id, tutor_id = tutor_id)
     db.session.add(module)
     db.session.commit()
 

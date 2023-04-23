@@ -38,7 +38,7 @@ class Tutor(db.Model):
 class Student(db.Model):
     student_id = db.Column(db.Integer(), primary_key=True)
     student_forename = db.Column(db.String(80), nullable=False)
-    student_surname = db.Column(db.String(80), nullable=False)
+    student_lastname = db.Column(db.String(80), nullable=False)
     student_email = db.Column(db.String(80), nullable=False)
     student_category = db.Column(db.String(80), nullable=False)
 
@@ -50,7 +50,7 @@ class Student(db.Model):
 class StudentSchema(ma.Schema):
     class Meta:
         # Fields to expose
-        fields = ("student_id","student_forename", "student_surname", "student_email", "student_category")
+        fields = ("student_id","student_forename", "student_lastname", "student_email", "student_category")
 
 # for a single instance of student 
 student_schema = StudentSchema()
@@ -94,6 +94,7 @@ class Module(db.Model):
     module_level = db.Column(db.Integer(), nullable=False)
     module_credits = db.Column(db.Integer(), nullable=False)
     course_id = db.Column(db.String(120), db.ForeignKey('course.course_id'), nullable=False)
+    tutor_id = db.Column(db.String(120), db.ForeignKey('tutor.tutor_id'), nullable=False)
     student_enrole_module = db.relationship('Student_Enrole_Module', backref='module')
 
     def __repr__(self) -> str:
@@ -103,7 +104,7 @@ class Module(db.Model):
 class ModuleSchema(ma.Schema):
     class Meta:
         # Fields to expose
-        fields = ("course_id","module_id","module_title", "module_description", "module_level", "module_credits")
+        fields = ("course_id","module_id","module_title", "module_description", "module_level", "module_credits",'tutor_id')
 
 # for a single instance of module 
 module_schema = ModuleSchema()

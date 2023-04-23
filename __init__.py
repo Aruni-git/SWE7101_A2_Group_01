@@ -2,7 +2,7 @@
 from flask import Flask,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
-  
+import os 
 
 # create an instance of the Flask class and assign to app
 # __name__ refers to the default path of the package
@@ -17,7 +17,12 @@ def create_app():
     app.config['SQLALCHEMY_ECHO'] = True
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+    # these two lines added to mac os support
+    db_name = 'student.db'
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, db_name)
     
+
     # Instantiate db obj
     
     
@@ -38,6 +43,7 @@ def create_app():
     from . import checkin_duration
     from .attendance import attendance
     from . import timetable_event
+    from . import student, course, module,tutor
 
 
     #this registers each of the routes
@@ -47,11 +53,15 @@ def create_app():
     app.register_blueprint(checkin_duration.gc)
     app.register_blueprint(attendance.at)
     app.register_blueprint(timetable_event.tt)
+    app.register_blueprint(tutor.tt)
 
 
+
+   
+  
 
     with app.app_context():
-        #db.drop_all()
+       # db.drop_all()
         db.create_all()
         
 
