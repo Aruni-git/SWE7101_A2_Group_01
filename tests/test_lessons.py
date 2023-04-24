@@ -1,5 +1,5 @@
 # Author: Aruni
-#Purpose: To write unit tests
+#Purpose: To test fetch lessons by tutotr id functionality
 #Date: April 23, 2023
 
 import requests
