@@ -39,7 +39,7 @@ def create_app():
     from .models.model import Timetable_Event
 
     # This import each files of this codebase so it can run in app.
-    from . import student, course, module,tutor
+    from . import student, course, module,tutor,timetable
 
 
     #this registers each of the routes
@@ -47,10 +47,11 @@ def create_app():
     app.register_blueprint(course.cs)
     app.register_blueprint(module.md)
     app.register_blueprint(tutor.tt)
+    app.register_blueprint(timetable.ttb)
 
 
     with app.app_context():
-       # db.drop_all()
+        #db.drop_all()
         db.create_all()
         
 
