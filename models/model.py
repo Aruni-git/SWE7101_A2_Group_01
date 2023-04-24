@@ -96,6 +96,7 @@ class Module(db.Model):
     course_id = db.Column(db.String(120), db.ForeignKey('course.course_id'), nullable=False)
     tutor_id = db.Column(db.String(120), db.ForeignKey('tutor.tutor_id'), nullable=False)
     student_enrole_module = db.relationship('Student_Enrole_Module', backref='module')
+    semester_is_active = db.Column (db.Boolean, nullable=False)
 
     def __repr__(self) -> str:
         return self.module_title
@@ -139,12 +140,27 @@ class Timetable_Event(db.Model):
     timetable_event_id = db.Column(db.Integer(), primary_key=True)
     timetable_event_day = db.Column(db.String(80), nullable=False)
     timetable_event_description = db.Column(db.String(80), nullable=False)
-    timetable_event_timestart = db.Column(db.String(80), nullable=False)
+    timetable_event_timestart = db.Column(db.DateTime, nullable=False)
     timetable_event_duration = db.Column(db.Integer(), nullable=False)
     timetable_event_room = db.Column(db.String(80), nullable=False)
-    module_id = db.Column(db.Integer(), nullable=False)
+    module_id = db.Column(db.Integer, db.ForeignKey('module.module_id'), nullable=False)
+
 
 
     def __repr__(self) -> str:
         return self.timetable_event_day
+    
+# Create Module Enrolment Schema
+class TimetableEventSchema(ma.Schema):
+    class Meta:
+        # Fields to expose
+        fields = ("timetable_event_id","timetable_event_day", 
+                  "timetable_event_description", "timetable_event_timestart", 
+                  "timetable_event_duration", "timetable_event_room",
+                   "module_id" )
+
+# for a single instance of enrol module 
+timetable_event_schema = TimetableEventSchema()
+# for many instances of enrol modules
+timetable_event_schemas = TimetableEventSchema(many=True)
     
