@@ -1,4 +1,4 @@
-#Author name: Jeffrey and Likitha
+#Author name: Ammar, Jeffrey and Likitha
 #Purpose: Accept only code P to mark attendance present, Checkin_duration
 #Date: April 01, 2023
 from flask import request, jsonify, Blueprint
@@ -31,17 +31,24 @@ def attendance(timetable_event_id):
         return jsonify ({"error":"You are late, Attendance Has Not Been Marked"})
 
     
-@at.route('/bulk-attendance/<int:timetable_event_id>', methods=['POST'])
+@at.route('/bulk-attendance-with-status-code/<int:timetable_event_id>', methods=['POST'])
 def bulk_reg(timetable_event_id):
+    valid_status_codes = ['A', 'O', 'P', 'N', 'C']
+    invalid_codes = []
     students = request.json.get("students")
     for student in students:
         id = student["student_id"]
         status = student["attendance_status"]
-        register_all = Attendance(timetable_event_id=timetable_event_id, student_id=id, status=status)
-        db.session.add(register_all)
-        db.session.commit()
-
-    return jsonify ({"success":"Students Attendance Has Been marked"})
+        if status not in valid_status_codes:
+            invalid_codes.append({"student_id": id, "attendance_status": status})
+            continue
+        try:
+            register_all = Attendance(timetable_event_id=timetable_event_id, student_id=id, status=status)
+            db.session.add(register_all)
+            db.session.commit()
+        except:
+            db.session.rollback()
+    return jsonify({"success": "Students attendance has been marked", "invalid_codes": invalid_codes})
      
 @at.route('amend-attendance/<int:timetable_event_id>', methods=['PUT'])
 def amend(timetable_event_id):
