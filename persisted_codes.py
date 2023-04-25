@@ -7,9 +7,9 @@ from flask import Flask,request,jsonify,Blueprint
 pc = Blueprint('persisted_codes', __name__, url_prefix='/persisted-code')
 
 #Sample list of codes that have already been persisted
-persisted_codes = ['VSO654','FTE321','HGY967']
+persisted_codes = ['A', 'O', 'P', 'N', 'C']
 
-@pc.route('/check-in', methods = ['POST'])
+@pc.route('/<int:timetable_event_id>', methods = ['POST'])
 def check_in():
     #Extract the code from the request data
     code = request.json.get('code')
