@@ -6,7 +6,7 @@ import requests
 
 def test_get_lessons_by_tutor():
     
-    url = "http://127.0.0.1:5000/tutor//current-semester-lessons/3"
+    url = "http://127.0.0.1:5000/api/current-semester-lessons/3"
     
     response = requests.get(url)
     assert response.status_code == 200
