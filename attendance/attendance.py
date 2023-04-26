@@ -2,7 +2,7 @@
 #Purpose: Accept only code P to mark attendance present
 #Date: April 01, 2023
 from flask import request, jsonify, Blueprint
-from ..models.model import Timetable_Event, Attendance 
+from ..models.model import Timetable_Event, Attendance
 from .. import db
 
 at = Blueprint('attendance', __name__, url_prefix='/register-attendance')
@@ -35,13 +35,13 @@ def bulk_reg(timetable_event_id):
 
     return jsonify ({"success":"Students Attendance Has Been marked"})
      
-@at.route('amend-attendance/<int:timetable_event_id>', methods=['PUT'])
-def amend(timetable_event_id):
-    stat = request.json.get("student_id")
+@at.route('/amend-attendance/<int:student_id>', methods=['PUT'])
+def amend(student_id):
+    stat = request.json.get("attendance_status")
 
-    change = Attendance.query.filter_by(timetable_event_id, student_id=stat)
-    if change.status is not "P":
-            stat = "P"
+    change = Attendance.query.filter_by(status=stat)
+    if student_id:
+            Attendance.status = stat
             db.session.commit()
             return jsonify ({"success":"attendance has been updated"})
     
