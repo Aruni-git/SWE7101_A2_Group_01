@@ -11,17 +11,17 @@ from sqlalchemy import and_
 
 
 #tutor route
-tt = Blueprint('tutor', __name__, url_prefix='/tutor')
+tt = Blueprint('tutor', __name__, url_prefix='/api')
 
 
 @tt.route("/")
 def tutor():
     return jsonify({"Welcome": "Tutor Page"})
 
-@tt.route('/lessons/<tutor_id>', methods = ['GET'])
-def fetchLessonsByTutor(tutor_id): 
-    
-    fetch_lessons = Module.query.filter_by(tutor_id=tutor_id)
+@tt.route('/lessons', methods = ['GET'])
+def fetchLessonsByTutor(): 
+    args = request.args['tutor_id']
+    fetch_lessons = Module.query.filter_by(tutor_id=args)
 
     print(list(fetch_lessons))
     return modules_schema.dump(fetch_lessons)

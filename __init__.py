@@ -58,6 +58,6 @@ def create_app():
     return app
 
 # decorator @ is used to determine path and trigger proceeding function
-@app.get("/")
+@app.get("/api")
 def hello_world():
  return "<p>Hello, Welcome to our student management system!</p>"
