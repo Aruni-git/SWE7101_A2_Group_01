@@ -39,6 +39,12 @@ def create_app():
     from .models.model import Timetable_Event
 
     # This import each files of this codebase so it can run in app.
+    from . import student, course, module
+    from . import checkin_duration
+    from .attendance import attendance
+    from . import timetable_event
+    from . import previous_attendance
+    from . import persisted_codes
     from . import student, course, module,tutor,timetable
 
 
@@ -46,6 +52,12 @@ def create_app():
     app.register_blueprint(student.st)
     app.register_blueprint(course.cs)
     app.register_blueprint(module.md)
+    app.register_blueprint(checkin_duration.gc)
+    app.register_blueprint(attendance.at)
+    app.register_blueprint(timetable_event.tt)
+    app.register_blueprint(previous_attendance.gm)
+    app.register_blueprint(persisted_codes.pc)
+
     app.register_blueprint(tutor.tt)
     app.register_blueprint(timetable.ttb)
 
@@ -61,3 +73,7 @@ def create_app():
 @app.get("/api")
 def hello_world():
  return "<p>Hello, Welcome to our student management system!</p>"
+
+@app.get("/bb")
+def hello():
+ return "<p>Hello, Welcome gement system!</p>"
