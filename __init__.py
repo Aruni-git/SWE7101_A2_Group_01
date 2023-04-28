@@ -73,7 +73,3 @@ def create_app():
 @app.get("/api")
 def hello_world():
  return "<p>Hello, Welcome to our student management system!</p>"
-
-@app.get("/bb")
-def hello():
- return "<p>Hello, Welcome gement system!</p>"
