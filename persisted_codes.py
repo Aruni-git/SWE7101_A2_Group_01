@@ -4,7 +4,7 @@
 
 from flask import Flask,request,jsonify,Blueprint
 
-pc = Blueprint('persisted_codes', __name__, url_prefix='/persisted-code')
+pc = Blueprint('persisted_codes', __name__, url_prefix='/api/persisted-code')
 
 #Sample list of codes that have already been persisted
 persisted_codes = ['A', 'O', 'P', 'N', 'C']
