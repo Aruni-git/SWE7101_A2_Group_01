@@ -9,7 +9,7 @@ from .models.model import Timetable_Event, timetable_event_schema
 from datetime import datetime
 
 #course route
-tt = Blueprint('timetable_event', __name__, url_prefix='/timetable-event')
+tt = Blueprint('timetable_event', __name__, url_prefix='/api/timetable-event')
 
 
 @tt.route("/")

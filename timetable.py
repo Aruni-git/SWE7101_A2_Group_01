@@ -9,7 +9,7 @@ from .models.model import Timetable_Event, timetable_event_schema
 from datetime import datetime
 
 #timetable route
-ttb = Blueprint('Timetable Event', __name__, url_prefix='/timetable_event')
+ttb = Blueprint('Timetable Event', __name__, url_prefix='/api/timetable_event')
 
 
 # This allows all lessons timetables to be regsitered via Isomnia

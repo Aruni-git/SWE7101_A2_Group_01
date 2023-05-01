@@ -11,7 +11,7 @@ from flask import Blueprint
 from .models.model import Module, modules_schema, Student_Enrole_Module, enrols_schema, Student, students_schema
 
 # module route
-md = Blueprint('module', __name__, url_prefix='/module')
+md = Blueprint('module', __name__, url_prefix='/api/module')
 
 
 @md.route("/")

@@ -63,17 +63,13 @@ def create_app():
 
 
     with app.app_context():
-        #db.drop_all()
+        # db.drop_all()
         db.create_all()
         
 
     return app
 
 # decorator @ is used to determine path and trigger proceeding function
-@app.get("/")
+@app.get("/api")
 def hello_world():
  return "<p>Hello, Welcome to our student management system!</p>"
-
-@app.get("/bb")
-def hello():
- return "<p>Hello, Welcome gement system!</p>"

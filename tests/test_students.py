@@ -6,7 +6,7 @@ import requests
     
 def test_get_all_students():
     
-    url ="http://127.0.0.1:5000/student/get-students"
+    url ="http://127.0.0.1:5000/api/student/get-students"
     
     response = requests.get(url)
     assert response.status_code == 200

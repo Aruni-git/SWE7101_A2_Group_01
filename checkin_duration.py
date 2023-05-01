@@ -11,7 +11,7 @@ from .models.model import Timetable_Event
 
 app.secret_key = 'my_secret_key'
 
-gc = Blueprint('generate_checkin_code', __name__, url_prefix='/generate')
+gc = Blueprint('generate_checkin_code', __name__, url_prefix='/api/generate')
 
 # @gc.route('/',methods=['post'])
 # def checkin():
