@@ -12,7 +12,7 @@ def test_register_students():
         'Accept': 'application/json'
     }
     data={
-            "check_in_code":"yyyyy"
+            "check_in_code":"YYYYY"
         }
 
     

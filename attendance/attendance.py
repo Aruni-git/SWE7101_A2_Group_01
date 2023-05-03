@@ -5,7 +5,7 @@ from flask import request, jsonify, Blueprint
 from ..models.model import Timetable_Event, Attendance
 from .. import db
 
-at = Blueprint('attendance', __name__, url_prefix='/register-attendance')
+at = Blueprint('attendance', __name__, url_prefix='/api/register-attendance')
 
 @at.route('/<int:timetable_event_id>', methods=['POST'])
 def attendance(timetable_event_id):
@@ -19,9 +19,9 @@ def attendance(timetable_event_id):
         db.session.add(register_attendance)
         db.session.commit()
 
-        return jsonify ({"success" : "Attendance Has Been Marked"})
+        return jsonify ({"success" : "Attendance Has Been Marked"}),201
     else:
-        return jsonify ({"error":"Invalid Input, Attendance Has Not Been Marked"})
+        return jsonify ({"error":"Invalid Input, Attendance Has Not Been Marked"}),400
     
 @at.route('/bulk-attendance/<int:timetable_event_id>', methods=['POST'])
 def bulk_reg(timetable_event_id):
@@ -33,7 +33,7 @@ def bulk_reg(timetable_event_id):
         db.session.add(register_all)
         db.session.commit()
 
-    return jsonify ({"success":"Students Attendance Has Been marked"})
+    return jsonify ({"success":"Students Attendance Has Been marked"}),201
      
 @at.route('/amend-attendance/<int:student_id>', methods=['PUT'])
 def amend(student_id):
@@ -43,7 +43,7 @@ def amend(student_id):
     if student_id:
             Attendance.status = stat
             db.session.commit()
-            return jsonify ({"success":"attendance has been updated"})
+            return jsonify ({"success":"attendance has been updated"}),200
     
     else:
-         return jsonify({"error":"attendance has already been marked"})
+         return jsonify({"error":"attendance has already been marked"}),403
