@@ -11,7 +11,7 @@ from flask import Blueprint
 from .models.model import Module, modules_schema, Student_Enrole_Module, enrols_schema, Student, students_schema
 
 # module route
-md = Blueprint('module', __name__, url_prefix='/module')
+md = Blueprint('module', __name__, url_prefix='/api/module')
 
 
 @md.route("/")
@@ -27,8 +27,11 @@ def reg_module():
     module_credits = request.json.get("module_credits")
     course_id = request.json.get("course_id")
     tutor_id = request.json.get("tutor_id")
+    semester_is_active = request.json.get("semester_is_active")
+    
 
-    module = Module(module_title = module_title, module_description = module_description, module_level = module_level, module_credits = module_credits, course_id = course_id, tutor_id = tutor_id)
+    module = Module(module_title = module_title, module_description = module_description, module_level = module_level, 
+                    module_credits = module_credits, course_id = course_id, tutor_id = tutor_id, semester_is_active = semester_is_active)
     db.session.add(module)
     db.session.commit()
 
@@ -62,7 +65,7 @@ def student_enroll_module():
 
 # This allows each student enrolled in the module to be fetched via Isomnia.
 @md.route("/get-module_student/<int:id>")
-def get__module_student(id):
+def get_module_student(id):
     get_student_enrole_modules = Student_Enrole_Module.query.filter_by(module_id=id)
 
     student_list =[]

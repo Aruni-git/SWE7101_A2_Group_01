@@ -1,5 +1,5 @@
 # Author: Jeff
-#Purpose: To Fetch The List of Courses(id, forename, lastname, email, category) and save in DB
+#Purpose: To Fetch The List of timetable events and save in db
 #Date; April 13, 2023
 
 from . import app, db
@@ -9,7 +9,7 @@ from .models.model import Timetable_Event, timetable_event_schema
 from datetime import datetime
 
 #course route
-tt = Blueprint('timetable_event', __name__, url_prefix='/timetable-event')
+tt = Blueprint('timetable_event', __name__, url_prefix='/api/timetable-event')
 
 
 @tt.route("/")

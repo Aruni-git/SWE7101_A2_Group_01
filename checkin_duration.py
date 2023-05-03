@@ -1,3 +1,7 @@
+#Author name: Ammar and Likitha
+#Purpose: Checkin_duration
+#Date: April 04, 2023
+
 from flask import Flask,jsonify,request,session,Blueprint
 from . import app,db
 from datetime import datetime,timedelta
@@ -5,10 +9,9 @@ import random
 import string
 from .models.model import Timetable_Event
 
-
 app.secret_key = 'my_secret_key'
 
-gc = Blueprint('generate_checkin_code', __name__, url_prefix='/generate')
+gc = Blueprint('generate_checkin_code', __name__, url_prefix='/api/generate')
 
 # @gc.route('/',methods=['post'])
 # def checkin():

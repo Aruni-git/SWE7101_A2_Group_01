@@ -8,7 +8,7 @@ from flask import Blueprint
 from .models.model import Student, students_schema
 
 #student route
-st = Blueprint('student', __name__, url_prefix='/student')
+st = Blueprint('student', __name__, url_prefix='/api/student')
 
 
 @st.route("/")

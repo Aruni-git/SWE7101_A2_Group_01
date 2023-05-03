@@ -1,5 +1,5 @@
 # Author: Aruni
-#Purpose: To write unit tests
+#Purpose: To test register student functionality
 #Date: April 23, 2023
 
 import requests
@@ -19,7 +19,7 @@ def test_register_students():
         }
 
     
-    url = 'http://127.0.0.1:5000/student/register'
+    url = 'http://127.0.0.1:5000/api/student/register'
 
     response = requests.post(url, data=json.dumps(data), headers=headers)
 
