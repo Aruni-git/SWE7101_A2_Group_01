@@ -16,7 +16,7 @@ def test_register_students():
         }
 
     
-    url = "http://127.0.0.1:5000/register-attendance/1"
+    url = "http://127.0.0.1:5000/api/register-attendance/1"
 
     response = requests.post(url, data=json.dumps(data), headers=headers)
 
