@@ -62,3 +62,29 @@ def amend(timetable_event_id):
     
     else:
          return jsonify({"error":"attendance has already been marked"})
+
+@at.route("amend-attendance-prev-semester/<int:course_id>/students/<int:student_id>", methods=["PUT"])
+def update_module_lesson_attendance(module_lesson_id, student_id):
+    stat = request.json.get("student_id")
+    try:
+        attendance = db.session.execute(db.select(Attendance).where(Attendance.module_lesson_id == module_lesson_id).where(Attendance.student_id == student_id)).scalar_one()
+        
+        module = db.session.execute(db.select(module).where(module.id == module.module_id)).scalar_one()
+        
+        semester = db.session.execute(db.select(module).where(module.id == module.semester_id)).scalar_one()
+
+        if semester.is_active:
+            status = request.json.get("status", None)
+            valid_status_codes = ["A", "O", "P", "N", "C"]
+            if status not in valid_status_codes:
+                return jsonify({"invalid": "Invalid Status Code"}), 401
+            
+            attendance.attendance_status = status
+            db.session.commit()
+            
+            return jsonify({"success": "Attendance Updated Successfully"}), 200
+        else:
+            return jsonify({"msg": "Amendment prior to current semester not allowed"}), 401
+        
+    except Exception as e:
+        return jsonify(str(e)), 401
