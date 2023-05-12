@@ -19,7 +19,7 @@ def attendance(timetable_event_id):
     event_time_plus = event_time + timedelta(minutes = 20)
     if event_time_plus > now:
         if check_in_code:
-            register_attendance = Attendance(timetable_event_id=timetable_event_id, student_id= 1, status="P") #P is set as a placeholder for the code of A/O/N/P functionality, and 1 is a placeholder till the student has been committed into database
+            register_attendance = Attendance(timetable_event_id=timetable_event_id, student_id= id, status="P") #P is set as a placeholder for the code of A/O/N/P/C functionality, and 1 is a placeholder till the student has been committed into database
             db.session.add(register_attendance)
             db.session.commit()
 
@@ -36,6 +36,7 @@ def bulk_reg(timetable_event_id):
     valid_status_codes = ['A', 'O', 'P', 'N', 'C']
     invalid_codes = []
     students = request.json.get("students")
+
     for student in students:
         id = student["student_id"]
         status = student["attendance_status"]
@@ -43,12 +44,12 @@ def bulk_reg(timetable_event_id):
             invalid_codes.append({"student_id": id, "attendance_status": status})
             continue
         try:
-            register_all = Attendance(timetable_event_id=timetable_event_id, student_id=id, status=status)
-            db.session.add(register_all)
-            db.session.commit()
+                register_all = Attendance(timetable_event_id=timetable_event_id, student_id=id, status=status)
+                db.session.add(register_all)
+                db.session.commit()
         except:
             db.session.rollback()
-    return jsonify({"success": "Students attendance has been marked", "invalid_codes": invalid_codes}),201
+            return jsonify({"success": "Students attendance has been marked" ,"invalid_codes": invalid_codes}),201 
      
 @at.route('/amend-attendance/<int:student_id>', methods=['PUT'])
 def amend(student_id):
