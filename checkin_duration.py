@@ -34,7 +34,7 @@ def generate_checkin_code(timetable_event_id):
     
     checkin_in_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
     timetable_event = Timetable_Event.query.filter_by(timetable_event_id=timetable_event_id).first()
-    timetable_event.check_in_code = checkin_in_code
+    Timetable_Event.check_in_code = checkin_in_code
     db.session.commit()
 
 
