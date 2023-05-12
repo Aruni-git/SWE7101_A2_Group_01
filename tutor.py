@@ -51,11 +51,12 @@ def fetch_Current_semester_lesson(tutor_id):
     return current_lessons
 
 # Fetch previous lessons for each semester
-@tt.route('/previous-lessons/<tutor_id>', methods = ['GET'])
-def fetch_past_lesson(tutor_id): 
+@tt.route('/previous-lessons', methods = ['GET'])
+def fetch_past_lesson(): 
     today = datetime.now()
     
-    fetch_modules = Module.query.filter_by(tutor_id=tutor_id)
+    args = request.args['tutor_id']
+    fetch_modules = Module.query.filter_by(tutor_id=args)
 
     module_id_list=[]
     past_lessons = []
